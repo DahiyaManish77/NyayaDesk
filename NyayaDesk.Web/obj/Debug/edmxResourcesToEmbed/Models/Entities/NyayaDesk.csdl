@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NyayaDeskDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Advocate">
+    <Key>
+      <PropertyRef Name="AdvocateId" />
+    </Key>
+    <Property Name="AdvocateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EnrollmentNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EnrollmentDate" Type="DateTime" Precision="0" />
+    <Property Name="EnrollmentState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EnrollmentCertificatePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="BarCouncilName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BarCouncilRegistrationNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AdvocateType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OfficeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OfficePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeMobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="WebsiteUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ProfessionalSummary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="YearsOfExperience" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ConsultationFee" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CourtTypeId" Type="Int32" />
+    <Property Name="CourtId" Type="Int32" />
+    <Property Name="LanguagesKnown" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IsAvailableForOnlineConsultation" Type="Boolean" Nullable="false" />
+    <Property Name="TotalCases" Type="Int32" Nullable="false" />
+    <Property Name="WonCases" Type="Int32" Nullable="false" />
+    <Property Name="LostCases" Type="Int32" Nullable="false" />
+    <Property Name="PendingCases" Type="Int32" Nullable="false" />
+    <Property Name="Rating" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="IsVerified" Type="Boolean" Nullable="false" />
+    <Property Name="VerificationDate" Type="DateTime" Precision="3" />
+    <Property Name="VerifiedBy" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Court" Relationship="Self.FK_Advocate_Court" FromRole="Advocate" ToRole="Court" />
+    <NavigationProperty Name="CourtType" Relationship="Self.FK_Advocate_CourtType" FromRole="Advocate" ToRole="CourtType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Advocate_User" FromRole="Advocate" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Advocate_VerifiedBy" FromRole="Advocate" ToRole="User" />
+    <NavigationProperty Name="AdvocateDocuments" Relationship="Self.FK_AdvocateDocument_Advocate" FromRole="Advocate" ToRole="AdvocateDocument" />
+    <NavigationProperty Name="AdvocateExperiences" Relationship="Self.FK_AdvocateExperience_Advocate" FromRole="Advocate" ToRole="AdvocateExperience" />
+    <NavigationProperty Name="AdvocatePracticeAreas" Relationship="Self.FK_AdvocatePracticeArea_Advocate" FromRole="Advocate" ToRole="AdvocatePracticeArea" />
+    <NavigationProperty Name="AdvocateQualifications" Relationship="Self.FK_AdvocateQualification_Advocate" FromRole="Advocate" ToRole="AdvocateQualification" />
+  </EntityType>
+  <EntityType Name="AdvocateDocument">
+    <Key>
+      <PropertyRef Name="AdvocateDocumentId" />
+    </Key>
+    <Property Name="AdvocateDocumentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdvocateId" Type="Int32" Nullable="false" />
+    <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="DocumentTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DocumentNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IssuingAuthority" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IssueDate" Type="DateTime" Precision="0" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+    <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="OriginalFileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="FileExtension" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="FileSizeKB" Type="Int64" />
+    <Property Name="MimeType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsVerified" Type="Boolean" Nullable="false" />
+    <Property Name="VerifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="VerifiedBy" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocate" Relationship="Self.FK_AdvocateDocument_Advocate" FromRole="AdvocateDocument" ToRole="Advocate" />
+    <NavigationProperty Name="DocumentType" Relationship="Self.FK_AdvocateDocument_DocumentType" FromRole="AdvocateDocument" ToRole="DocumentType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_AdvocateDocument_VerifiedBy" FromRole="AdvocateDocument" ToRole="User" />
+  </EntityType>
+  <EntityType Name="AdvocateExperience">
+    <Key>
+      <PropertyRef Name="AdvocateExperienceId" />
+    </Key>
+    <Property Name="AdvocateExperienceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdvocateId" Type="Int32" Nullable="false" />
+    <Property Name="OrganizationName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PositionHeld" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ExperienceType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PracticeArea" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Precision="0" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+    <Property Name="TotalExperienceMonths" Type="Int32" />
+    <Property Name="Responsibilities" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Achievements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CertificatePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ReferenceName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ReferenceMobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ReferenceEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocate" Relationship="Self.FK_AdvocateExperience_Advocate" FromRole="AdvocateExperience" ToRole="Advocate" />
+  </EntityType>
+  <EntityType Name="AdvocatePracticeArea">
+    <Key>
+      <PropertyRef Name="AdvocatePracticeAreaId" />
+    </Key>
+    <Property Name="AdvocatePracticeAreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdvocateId" Type="Int32" Nullable="false" />
+    <Property Name="PracticeAreaId" Type="Int32" Nullable="false" />
+    <Property Name="IsPrimaryPracticeArea" Type="Boolean" Nullable="false" />
+    <Property Name="ExperienceInYears" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocate" Relationship="Self.FK_AdvocatePracticeArea_Advocate" FromRole="AdvocatePracticeArea" ToRole="Advocate" />
+    <NavigationProperty Name="PracticeArea" Relationship="Self.FK_AdvocatePracticeArea_PracticeArea" FromRole="AdvocatePracticeArea" ToRole="PracticeArea" />
+  </EntityType>
+  <EntityType Name="AdvocateQualification">
+    <Key>
+      <PropertyRef Name="AdvocateQualificationId" />
+    </Key>
+    <Property Name="AdvocateQualificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdvocateId" Type="Int32" Nullable="false" />
+    <Property Name="DegreeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Specialization" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UniversityName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CollegeName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PassingYear" Type="Int32" Nullable="false" />
+    <Property Name="Percentage" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CertificateNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CertificatePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsHighestQualification" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocate" Relationship="Self.FK_AdvocateQualification_Advocate" FromRole="AdvocateQualification" ToRole="Advocate" />
+  </EntityType>
+  <EntityType Name="CaseStage">
+    <Key>
+      <PropertyRef Name="CaseStageId" />
+    </Key>
+    <Property Name="CaseStageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CaseStageName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CaseStatu">
+    <Key>
+      <PropertyRef Name="CaseStatusId" />
+    </Key>
+    <Property Name="CaseStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CaseStatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CaseType">
+    <Key>
+      <PropertyRef Name="CaseTypeId" />
+    </Key>
+    <Property Name="CaseTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CaseTypeName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CityCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PinCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="District" Relationship="Self.FK_City_District" FromRole="City" ToRole="District" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_City" FromRole="City" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ISO2Code" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ISO3Code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="ISDCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="States" Relationship="Self.FK_State_Country" FromRole="Country" ToRole="State" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_Country" FromRole="Country" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Court">
+    <Key>
+      <PropertyRef Name="CourtId" />
+    </Key>
+    <Property Name="CourtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourtTypeId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictId" Type="Int32" Nullable="false" />
+    <Property Name="CourtName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CourtCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PinCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ContactNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EmailAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="WebsiteUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocates" Relationship="Self.FK_Advocate_Court" FromRole="Court" ToRole="Advocate" />
+    <NavigationProperty Name="CourtType" Relationship="Self.FK_Court_CourtType" FromRole="Court" ToRole="CourtType" />
+    <NavigationProperty Name="District" Relationship="Self.FK_Court_District" FromRole="Court" ToRole="District" />
+  </EntityType>
+  <EntityType Name="CourtType">
+    <Key>
+      <PropertyRef Name="CourtTypeId" />
+    </Key>
+    <Property Name="CourtTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourtTypeName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocates" Relationship="Self.FK_Advocate_CourtType" FromRole="CourtType" ToRole="Advocate" />
+    <NavigationProperty Name="Courts" Relationship="Self.FK_Court_CourtType" FromRole="CourtType" ToRole="Court" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="DistrictName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DistrictCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK_City_District" FromRole="District" ToRole="City" />
+    <NavigationProperty Name="Courts" Relationship="Self.FK_Court_District" FromRole="District" ToRole="Court" />
+    <NavigationProperty Name="State" Relationship="Self.FK_District_State" FromRole="District" ToRole="State" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_District" FromRole="District" ToRole="User" />
+  </EntityType>
+  <EntityType Name="DocumentType">
+    <Key>
+      <PropertyRef Name="DocumentTypeId" />
+    </Key>
+    <Property Name="DocumentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocumentTypeName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AllowedExtensions" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MaxFileSizeMB" Type="Int32" Nullable="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="AdvocateDocuments" Relationship="Self.FK_AdvocateDocument_DocumentType" FromRole="DocumentType" ToRole="AdvocateDocument" />
+  </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="GenderId" />
+    </Key>
+    <Property Name="GenderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GenderCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_Gender" FromRole="Gender" ToRole="User" />
+  </EntityType>
+  <EntityType Name="PaymentMode">
+    <Key>
+      <PropertyRef Name="PaymentModeId" />
+    </Key>
+    <Property Name="PaymentModeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentModeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PaymentModeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PermissionName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PermissionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ModuleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsSystemPermission" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="RolePermissions" Relationship="Self.FK_RolePermission_Permission" FromRole="Permission" ToRole="RolePermission" />
+  </EntityType>
+  <EntityType Name="PracticeArea">
+    <Key>
+      <PropertyRef Name="PracticeAreaId" />
+    </Key>
+    <Property Name="PracticeAreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PracticeAreaName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="AdvocatePracticeAreas" Relationship="Self.FK_AdvocatePracticeArea_PracticeArea" FromRole="PracticeArea" ToRole="AdvocatePracticeArea" />
+  </EntityType>
+  <EntityType Name="Priority">
+    <Key>
+      <PropertyRef Name="PriorityId" />
+    </Key>
+    <Property Name="PriorityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ColorCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IsSystemRole" Type="Boolean" Nullable="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="RolePermissions" Relationship="Self.FK_RolePermission_Role" FromRole="Role" ToRole="RolePermission" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="RolePermission">
+    <Key>
+      <PropertyRef Name="RolePermissionId" />
+    </Key>
+    <Property Name="RolePermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="PermissionId" Type="Int32" Nullable="false" />
+    <Property Name="IsAllowed" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Permission" Relationship="Self.FK_RolePermission_Permission" FromRole="RolePermission" ToRole="Permission" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_RolePermission_Role" FromRole="RolePermission" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="Int32" Nullable="false" />
+    <Property Name="StateName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StateCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_State_Country" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Districts" Relationship="Self.FK_District_State" FromRole="State" ToRole="District" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_State" FromRole="State" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserGuid" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordSalt" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SecurityStamp" Type="Guid" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="GenderId" Type="Int32" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="ProfilePhotoPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="DistrictId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="AddressLine1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="PinCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+    <Property Name="IsMobileVerified" Type="Boolean" Nullable="false" />
+    <Property Name="FailedLoginCount" Type="Int32" Nullable="false" />
+    <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDate" Type="DateTime" Precision="3" />
+    <Property Name="LastLoginOn" Type="DateTime" Precision="3" />
+    <Property Name="LastPasswordChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="PasswordExpiryOn" Type="DateTime" Precision="3" />
+    <Property Name="IsFirstLogin" Type="Boolean" Nullable="false" />
+    <Property Name="IsSystemUser" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Advocates" Relationship="Self.FK_Advocate_User" FromRole="User" ToRole="Advocate" />
+    <NavigationProperty Name="Advocates1" Relationship="Self.FK_Advocate_VerifiedBy" FromRole="User" ToRole="Advocate" />
+    <NavigationProperty Name="AdvocateDocuments" Relationship="Self.FK_AdvocateDocument_VerifiedBy" FromRole="User" ToRole="AdvocateDocument" />
+    <NavigationProperty Name="City" Relationship="Self.FK_User_City" FromRole="User" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_User_Country" FromRole="User" ToRole="Country" />
+    <NavigationProperty Name="District" Relationship="Self.FK_User_District" FromRole="User" ToRole="District" />
+    <NavigationProperty Name="Gender" Relationship="Self.FK_User_Gender" FromRole="User" ToRole="Gender" />
+    <NavigationProperty Name="State" Relationship="Self.FK_User_State" FromRole="User" ToRole="State" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+    <Property Name="FailedLoginAttempts" Type="Int32" Nullable="false" />
+    <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="IsPrimaryRole" Type="Boolean" Nullable="false" />
+    <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EffectiveTo" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Advocate_Court">
+    <End Role="Court" Type="Self.Court" Multiplicity="0..1" />
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Court">
+        <PropertyRef Name="CourtId" />
+      </Principal>
+      <Dependent Role="Advocate">
+        <PropertyRef Name="CourtId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Advocate_CourtType">
+    <End Role="CourtType" Type="Self.CourtType" Multiplicity="0..1" />
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourtType">
+        <PropertyRef Name="CourtTypeId" />
+      </Principal>
+      <Dependent Role="Advocate">
+        <PropertyRef Name="CourtTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Advocate_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Advocate">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Advocate_VerifiedBy">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Advocate">
+        <PropertyRef Name="VerifiedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocateDocument_Advocate">
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="1" />
+    <End Role="AdvocateDocument" Type="Self.AdvocateDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advocate">
+        <PropertyRef Name="AdvocateId" />
+      </Principal>
+      <Dependent Role="AdvocateDocument">
+        <PropertyRef Name="AdvocateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocateExperience_Advocate">
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="1" />
+    <End Role="AdvocateExperience" Type="Self.AdvocateExperience" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advocate">
+        <PropertyRef Name="AdvocateId" />
+      </Principal>
+      <Dependent Role="AdvocateExperience">
+        <PropertyRef Name="AdvocateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocatePracticeArea_Advocate">
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="1" />
+    <End Role="AdvocatePracticeArea" Type="Self.AdvocatePracticeArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advocate">
+        <PropertyRef Name="AdvocateId" />
+      </Principal>
+      <Dependent Role="AdvocatePracticeArea">
+        <PropertyRef Name="AdvocateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocateQualification_Advocate">
+    <End Role="Advocate" Type="Self.Advocate" Multiplicity="1" />
+    <End Role="AdvocateQualification" Type="Self.AdvocateQualification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advocate">
+        <PropertyRef Name="AdvocateId" />
+      </Principal>
+      <Dependent Role="AdvocateQualification">
+        <PropertyRef Name="AdvocateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocateDocument_DocumentType">
+    <End Role="DocumentType" Type="Self.DocumentType" Multiplicity="1" />
+    <End Role="AdvocateDocument" Type="Self.AdvocateDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DocumentType">
+        <PropertyRef Name="DocumentTypeId" />
+      </Principal>
+      <Dependent Role="AdvocateDocument">
+        <PropertyRef Name="DocumentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocateDocument_VerifiedBy">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="AdvocateDocument" Type="Self.AdvocateDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="AdvocateDocument">
+        <PropertyRef Name="VerifiedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdvocatePracticeArea_PracticeArea">
+    <End Role="PracticeArea" Type="Self.PracticeArea" Multiplicity="1" />
+    <End Role="AdvocatePracticeArea" Type="Self.AdvocatePracticeArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PracticeArea">
+        <PropertyRef Name="PracticeAreaId" />
+      </Principal>
+      <Dependent Role="AdvocatePracticeArea">
+        <PropertyRef Name="PracticeAreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_District">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Court_CourtType">
+    <End Role="CourtType" Type="Self.CourtType" Multiplicity="1" />
+    <End Role="Court" Type="Self.Court" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourtType">
+        <PropertyRef Name="CourtTypeId" />
+      </Principal>
+      <Dependent Role="Court">
+        <PropertyRef Name="CourtTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Court_District">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="Court" Type="Self.Court" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="Court">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_District_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="District" Type="Self.District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_District">
+    <End Role="District" Type="Self.District" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="DistrictId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Gender">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="GenderId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePermission_Permission">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+    <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="PermissionId" />
+      </Principal>
+      <Dependent Role="RolePermission">
+        <PropertyRef Name="PermissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePermission_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="RolePermission">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_State">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NyayaDeskDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Advocates" EntityType="Self.Advocate" />
+    <EntitySet Name="AdvocateDocuments" EntityType="Self.AdvocateDocument" />
+    <EntitySet Name="AdvocateExperiences" EntityType="Self.AdvocateExperience" />
+    <EntitySet Name="AdvocatePracticeAreas" EntityType="Self.AdvocatePracticeArea" />
+    <EntitySet Name="AdvocateQualifications" EntityType="Self.AdvocateQualification" />
+    <EntitySet Name="CaseStages" EntityType="Self.CaseStage" />
+    <EntitySet Name="CaseStatus" EntityType="Self.CaseStatu" />
+    <EntitySet Name="CaseTypes" EntityType="Self.CaseType" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Courts" EntityType="Self.Court" />
+    <EntitySet Name="CourtTypes" EntityType="Self.CourtType" />
+    <EntitySet Name="Districts" EntityType="Self.District" />
+    <EntitySet Name="DocumentTypes" EntityType="Self.DocumentType" />
+    <EntitySet Name="Genders" EntityType="Self.Gender" />
+    <EntitySet Name="PaymentModes" EntityType="Self.PaymentMode" />
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="PracticeAreas" EntityType="Self.PracticeArea" />
+    <EntitySet Name="Priorities" EntityType="Self.Priority" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="RolePermissions" EntityType="Self.RolePermission" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_Advocate_Court" Association="Self.FK_Advocate_Court">
+      <End Role="Court" EntitySet="Courts" />
+      <End Role="Advocate" EntitySet="Advocates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Advocate_CourtType" Association="Self.FK_Advocate_CourtType">
+      <End Role="CourtType" EntitySet="CourtTypes" />
+      <End Role="Advocate" EntitySet="Advocates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Advocate_User" Association="Self.FK_Advocate_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Advocate" EntitySet="Advocates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Advocate_VerifiedBy" Association="Self.FK_Advocate_VerifiedBy">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Advocate" EntitySet="Advocates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocateDocument_Advocate" Association="Self.FK_AdvocateDocument_Advocate">
+      <End Role="Advocate" EntitySet="Advocates" />
+      <End Role="AdvocateDocument" EntitySet="AdvocateDocuments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocateExperience_Advocate" Association="Self.FK_AdvocateExperience_Advocate">
+      <End Role="Advocate" EntitySet="Advocates" />
+      <End Role="AdvocateExperience" EntitySet="AdvocateExperiences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocatePracticeArea_Advocate" Association="Self.FK_AdvocatePracticeArea_Advocate">
+      <End Role="Advocate" EntitySet="Advocates" />
+      <End Role="AdvocatePracticeArea" EntitySet="AdvocatePracticeAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocateQualification_Advocate" Association="Self.FK_AdvocateQualification_Advocate">
+      <End Role="Advocate" EntitySet="Advocates" />
+      <End Role="AdvocateQualification" EntitySet="AdvocateQualifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocateDocument_DocumentType" Association="Self.FK_AdvocateDocument_DocumentType">
+      <End Role="DocumentType" EntitySet="DocumentTypes" />
+      <End Role="AdvocateDocument" EntitySet="AdvocateDocuments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocateDocument_VerifiedBy" Association="Self.FK_AdvocateDocument_VerifiedBy">
+      <End Role="User" EntitySet="Users" />
+      <End Role="AdvocateDocument" EntitySet="AdvocateDocuments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdvocatePracticeArea_PracticeArea" Association="Self.FK_AdvocatePracticeArea_PracticeArea">
+      <End Role="PracticeArea" EntitySet="PracticeAreas" />
+      <End Role="AdvocatePracticeArea" EntitySet="AdvocatePracticeAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_District" Association="Self.FK_City_District">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_City" Association="Self.FK_User_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Country" Association="Self.FK_User_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Court_CourtType" Association="Self.FK_Court_CourtType">
+      <End Role="CourtType" EntitySet="CourtTypes" />
+      <End Role="Court" EntitySet="Courts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Court_District" Association="Self.FK_Court_District">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Court" EntitySet="Courts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_District_State" Association="Self.FK_District_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="District" EntitySet="Districts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_District" Association="Self.FK_User_District">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
+      <End Role="Gender" EntitySet="Genders" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
+      <End Role="Permission" EntitySet="Permissions" />
+      <End Role="RolePermission" EntitySet="RolePermissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePermission_Role" Association="Self.FK_RolePermission_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="RolePermission" EntitySet="RolePermissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_State" Association="Self.FK_User_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

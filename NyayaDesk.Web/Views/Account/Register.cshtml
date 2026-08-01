@@ -1,0 +1,752 @@
+@model NyayaDesk.Models.ViewModels.WorkspaceRegistrationVM
+@{
+    Layout = null;
+    ViewBag.Title = "Create Workspace - NyayaDesk";
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: #111a2e;
+            background: #f3f7fb;
+        }
+
+        /* Layout */
+        .onboard {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: minmax(340px, 0.8fr) minmax(620px, 1.2fr);
+        }
+
+        /* Intro Section */
+        .intro {
+            background: linear-gradient(145deg, #173b64, #0f2948);
+            color: #fff;
+            padding: 58px 8vw 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            color: #12b7a3;
+        }
+
+        .intro h1 {
+            font-size: 44px;
+            line-height: 1.1;
+            margin: 90px 0 18px;
+        }
+
+        .intro h1 em {
+            font-style: normal;
+            color: #13b5a1;
+        }
+
+        .intro p {
+            color: #c2cfdd;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .intro ul {
+            list-style: none;
+            padding: 0;
+            margin: 38px 0;
+        }
+
+        .intro li {
+            padding: 10px 0;
+            color: #e2ebf3;
+        }
+
+        .intro li:before {
+            content: '✓';
+            color: #18c9ad;
+            font-weight: 800;
+            margin-right: 12px;
+        }
+
+        /* Form Side */
+        .form-side {
+            padding: 40px 7vw;
+            overflow: auto;
+        }
+
+        .form-wrap {
+            max-width: 760px;
+            margin: auto;
+        }
+
+        .topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topline a {
+            color: #078f81;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .topline a:hover {
+            text-decoration: underline;
+        }
+
+        .form-wrap h2 {
+            font-size: 34px;
+            margin: 42px 0 8px;
+        }
+
+        .sub {
+            color: #6b7e94;
+            margin-bottom: 28px;
+        }
+
+        /* Validation Summary */
+        .validation-summary {
+            background: #fff0ef;
+            color: #a92820;
+            border: 1px solid #f1bbb7;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+        }
+
+        .validation-summary ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .validation-summary .field-validation-error {
+            color: #a92820;
+            font-size: 14px;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #dff5f1;
+            color: #0a6b5f;
+            border: 1px solid #12b7a3;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        /* Form Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+            position: relative;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: 13px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .field label .required {
+            color: #d32f2f;
+            margin-left: 4px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #d5e0e9;
+            background: #fff;
+            border-radius: 11px;
+            padding: 0 14px;
+            font: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #0d9b8d;
+            box-shadow: 0 0 0 3px #dff5f1;
+        }
+
+        .field input.input-error,
+        .field select.input-error {
+            border-color: #d32f2f;
+        }
+
+        .field .field-validation-error {
+            color: #d32f2f;
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Password strength */
+        .password-strength {
+            margin-top: 6px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .password-strength .bar {
+            flex: 1;
+            height: 4px;
+            background: #e0e6ed;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength .bar .fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .password-strength .text {
+            font-size: 11px;
+            color: #6b7e94;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        /* Plans */
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .plans .plan-option {
+            border: 2px solid #d5e0e9;
+            background: #fff;
+            border-radius: 12px;
+            padding: 13px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+
+        .plans .plan-option:hover {
+            border-color: #0d9b8d;
+        }
+
+        .plans .plan-option.selected {
+            border-color: #0d9b8d;
+            background: #f0faf8;
+        }
+
+        .plans input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .plans .plan-option strong {
+            display: block;
+            margin-left: 0;
+        }
+
+        .plans .plan-option small {
+            display: block;
+            color: #6b7e94;
+            margin-top: 4px;
+        }
+
+        .plans .plan-option .plan-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: #0d9b8d;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .plans .plan-option.selected .plan-check {
+            opacity: 1;
+        }
+
+        /* Terms */
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            color: #5c6f84;
+            font-size: 13px;
+        }
+
+        .terms input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            margin-top: 1px;
+            cursor: pointer;
+        }
+
+        .terms a {
+            color: #0d9b8d;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit */
+        .submit {
+            width: 100%;
+            height: 54px;
+            border: 0;
+            border-radius: 11px;
+            background: #0d9b8d;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 22px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit:hover {
+            background: #0a7d71;
+        }
+
+        .submit:active {
+            transform: scale(0.98);
+        }
+
+        .submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .submit .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+        }
+
+        .submit.loading .spinner {
+            display: inline-block;
+        }
+
+        @@keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fine {
+            font-size: 11px;
+            color: #8190a0;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* Responsive */
+        @@media (max-width: 900px) {
+            .onboard {
+                grid-template-columns: 1fr;
+            }
+
+            .intro {
+                display: none;
+            }
+
+            .form-side {
+                padding: 28px 18px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plans {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+        }
+
+        /* Small screen adjustments */
+        @@media (max-width: 480px) {
+            .form-wrap h2 {
+                font-size: 28px;
+            }
+
+            .topline {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="onboard">
+        <!-- Intro Section -->
+        <aside class="intro">
+            <div class="brand"><span>⚖</span> NyayaDesk</div>
+            <h1>Build your legal practice on a <em>secure workspace.</em></h1>
+            <p>Start a professional, subscription-ready workspace for your independent practice or law firm.</p>
+            <ul>
+                <li>14-day free trial with no payment required</li>
+                <li>Tenant-isolated firm and client information</li>
+                <li>Cases, hearings, documents and billing</li>
+                <li>Role-based team access and audit trail</li>
+            </ul>
+        </aside>
+
+        <!-- Form Section -->
+        <section class="form-side">
+            <div class="form-wrap">
+                <div class="topline">
+                    <strong>CREATE WORKSPACE</strong>
+                    <a href="@Url.Action("Login", "Account")">Already registered? Sign in</a>
+                </div>
+
+                <h2>Start your free trial</h2>
+                <p class="sub">Create the owner account and select a plan. You can change it before billing begins.</p>
+
+                <!-- Validation Summary -->
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="validation-summary" role="alert">
+                        @Html.ValidationSummary(false)
+                    </div>
+                }
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage" role="alert">
+                    <strong>Success!</strong> Your workspace has been created. You will be redirected shortly.
+                </div>
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm", novalidate = "novalidate" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="grid">
+                        <!-- First Name -->
+                        <div class="field">
+                            <label for="FirstName">First name <span class="required">*</span></label>
+                            @Html.TextBoxFor(x => x.FirstName, new
+                            {
+                                id = "FirstName",
+                                placeholder = "First name",
+                                autocomplete = "given-name",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="field">
+                            <label for="LastName">Last name <span class="required">*</span></label>
+                            @Html.TextBoxFor(x => x.LastName, new
+                            {
+                                id = "LastName",
+                                placeholder = "Last name",
+                                autocomplete = "family-name",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Email -->
+                        <div class="field">
+                            <label for="Email">Email address <span class="required">*</span></label>
+                            @Html.TextBoxFor(x => x.Email, new
+                            {
+                                id = "Email",
+                                type = "email",
+                                placeholder = "you@lawfirm.in",
+                                autocomplete = "email",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Mobile -->
+                        <div class="field">
+                            <label for="MobileNumber">Mobile number <span class="required">*</span></label>
+                            @Html.TextBoxFor(x => x.MobileNumber, new
+                            {
+                                id = "MobileNumber",
+                                type = "tel",
+                                placeholder = "+91 98765 43210",
+                                autocomplete = "tel",
+                                required = "required",
+                                aria_required = "true",
+                                pattern = "^[+0-9\\s\\-()]{10,15}$",
+                                title = "Enter a valid phone number (10-15 digits, with optional country code)"
+                            })
+                            @Html.ValidationMessageFor(x => x.MobileNumber, "", new { @class = "field-validation-error" })
+                            <small style="color:#6b7e94;font-size:11px;">Include country code (e.g., +91)</small>
+                        </div>
+
+                        <!-- Workspace Name -->
+                        <div class="field full">
+                            <label for="WorkspaceName">Law firm / workspace name <span class="required">*</span></label>
+                            @Html.TextBoxFor(x => x.WorkspaceName, new
+                            {
+                                id = "WorkspaceName",
+                                placeholder = "Sharma Legal Chambers",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.WorkspaceName, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Role -->
+                        <div class="field full">
+                            <label for="ProfessionalRole">I am registering as <span class="required">*</span></label>
+                            @Html.DropDownListFor(x => x.ProfessionalRole, new[]
+                            {
+                                new SelectListItem { Value = "ADVOCATE", Text = "Independent Advocate" },
+                                new SelectListItem { Value = "SENIORADV", Text = "Senior Advocate" },
+                                new SelectListItem { Value = "FIRMADMIN", Text = "Law Firm Administrator" }
+                            }, new
+                                        {
+                                id = "ProfessionalRole",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.ProfessionalRole, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Plan Selection -->
+                        <div class="field full">
+                            <label>Select your trial plan <span class="required">*</span></label>
+                            <div class="plans" role="radiogroup" aria-label="Select plan">
+                                <label class="plan-option" data-plan="SOLO">
+                                    <input type="radio" name="PlanCode" value="SOLO" checked>
+                                    <strong>Solo</strong>
+                                    <small>₹799/month</small>
+                                    <span class="plan-check">✓</span>
+                                </label>
+                                <label class="plan-option" data-plan="PRO">
+                                    <input type="radio" name="PlanCode" value="PRO">
+                                    <strong>Professional</strong>
+                                    <small>₹1,999/month</small>
+                                    <span class="plan-check">✓</span>
+                                </label>
+                                <label class="plan-option" data-plan="FIRM">
+                                    <input type="radio" name="PlanCode" value="FIRM">
+                                    <strong>Law Firm</strong>
+                                    <small>₹4,999/month</small>
+                                    <span class="plan-check">✓</span>
+                                </label>
+                            </div>
+                            @Html.ValidationMessageFor(x => x.PlanCode, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Password -->
+                        <div class="field">
+                            <label for="Password">Password <span class="required">*</span></label>
+                            @Html.PasswordFor(x => x.Password, new
+                            {
+                                id = "Password",
+                                placeholder = "Minimum 8 characters",
+                                autocomplete = "new-password",
+                                required = "required",
+                                aria_required = "true",
+                                minlength = "8"
+                            })
+                            <div class="password-strength" id="passwordStrength">
+                                <span class="bar"><span class="fill" id="passwordBar"></span></span>
+                                <span class="text" id="passwordText">Weak</span>
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="field">
+                            <label for="ConfirmPassword">Confirm password <span class="required">*</span></label>
+                            @Html.PasswordFor(x => x.ConfirmPassword, new
+                            {
+                                id = "ConfirmPassword",
+                                placeholder = "Repeat password",
+                                autocomplete = "new-password",
+                                required = "required",
+                                aria_required = "true"
+                            })
+                            @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "field-validation-error" })
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="field full terms">
+                            <input type="checkbox" id="AcceptTerms" name="AcceptTerms" value="true" required aria-required="true">
+                            <input type="hidden" name="AcceptTerms" value="false">
+                            <label for="AcceptTerms" style="font-weight:400;display:inline;margin:0;cursor:pointer;">
+                                I agree to the
+                                <a href="#" target="_blank">Terms of Service</a>,
+                                <a href="#" target="_blank">Privacy Policy</a>
+                                and secure processing of workspace data.
+                            </label>
+                            @Html.ValidationMessageFor(x => x.AcceptTerms, "", new { @class = "field-validation-error" })
+                        </div>
+                    </div>
+
+                    <button class="submit" type="submit" id="submitBtn">
+                        <span class="spinner"></span>
+                        <span class="btn-text">Create workspace & start trial →</span>
+                    </button>
+                    <div class="fine">No card required. GST will apply only when a paid subscription starts.</div>
+                }
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Plan selection UI
+            $('.plan-option').on('click', function () {
+                var $this = $(this);
+                $this.find('input[type="radio"]').prop('checked', true);
+                $('.plan-option').removeClass('selected');
+                $this.addClass('selected');
+            });
+
+            // Set initial selected plan
+            var checkedPlan = $('.plan-option input[type="radio"]:checked');
+            if (checkedPlan.length) {
+                checkedPlan.closest('.plan-option').addClass('selected');
+            }
+
+            // Password strength meter
+            $('#Password').on('input', function () {
+                var password = $(this).val();
+                var strength = 0;
+                var bar = $('#passwordBar');
+                var text = $('#passwordText');
+
+                if (password.length >= 8) strength += 25;
+                if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 25;
+                if (password.match(/\d/)) strength += 25;
+                if (password.match(/[^a-zA-Z0-9]/)) strength += 25;
+
+                bar.css('width', strength + '%');
+
+                if (strength < 25) {
+                    bar.css('background', '#d32f2f');
+                    text.text('Weak');
+                } else if (strength < 50) {
+                    bar.css('background', '#ffa726');
+                    text.text('Fair');
+                } else if (strength < 75) {
+                    bar.css('background', '#ffca28');
+                    text.text('Good');
+                } else {
+                    bar.css('background', '#43a047');
+                    text.text('Strong');
+                }
+            }).trigger('input');
+
+            // Fix the terms checkbox validation
+            $('#AcceptTerms').on('change', function () {
+                var errorSpan = $(this).closest('.terms').find('.field-validation-error');
+                if ($(this).is(':checked')) {
+                    errorSpan.text('');
+                    $(this).removeClass('input-error');
+                }
+            });
+
+            // Form submission with loading state
+            $('#registerForm').on('submit', function () {
+                var $btn = $('#submitBtn');
+                var $form = $(this);
+
+                // Check terms manually before validation
+                var termsChecked = $('#AcceptTerms').is(':checked');
+                if (!termsChecked) {
+                    var termsError = $('#AcceptTerms').closest('.terms').find('.field-validation-error');
+                    termsError.text('Accept the terms and privacy policy to continue.');
+                    $('#AcceptTerms').addClass('input-error');
+                    return false;
+                }
+
+                if ($form.valid()) {
+                    $btn.addClass('loading');
+                    $btn.find('.btn-text').text('Creating workspace...');
+                    $btn.prop('disabled', true);
+                }
+            });
+
+            // Re-enable button if validation fails
+            $('#registerForm').on('invalid-form.validate', function () {
+                var $btn = $('#submitBtn');
+                $btn.removeClass('loading');
+                $btn.find('.btn-text').text('Create workspace & start trial →');
+                $btn.prop('disabled', false);
+            });
+
+            // Auto-dismiss validation errors on input
+            $('input, select').on('input change', function () {
+                $(this).removeClass('input-error');
+                var error = $(this).siblings('.field-validation-error');
+                if (error.length) {
+                    error.text('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
